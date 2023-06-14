@@ -1,0 +1,213 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold text-primary">Create Your Account</h2>
+                        <p class="text-muted">Join Smart Quiz System today</p>
+                    </div>
+
+                    <form method="post" id="registerForm">
+                        {% csrf_token %}
+                        
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {% for field, errors in form.errors.items %}
+                                    {% for error in errors %}
+                                        <p class="mb-0">{{ error }}</p>
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!-- Role Selection -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-person-badge me-2"></i>I want to register as:
+                            </label>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="card role-card" data-role="student">
+                                        <div class="card-body text-center">
+                                            <i class="bi bi-person display-4 text-primary"></i>
+                                            <h5 class="mt-2">Student</h5>
+                                            <p class="text-muted small">Take quizzes and track progress</p>
+                                            <input type="radio" name="role" value="student" checked class="d-none">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="card role-card" data-role="instructor">
+                                        <div class="card-body text-center">
+                                            <i class="bi bi-person-workspace display-4 text-warning"></i>
+                                            <h5 class="mt-2">Instructor</h5>
+                                            <p class="text-muted small">Create and manage quizzes</p>
+                                            <input type="radio" name="role" value="instructor" class="d-none">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="text-info">
+                                <i class="bi bi-info-circle me-1"></i>
+                                Instructor accounts require admin approval
+                            </small>
+                        </div>
+
+                        <!-- Personal Information -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.first_name.id_for_label }}" class="form-label">
+                                        <i class="bi bi-person me-2"></i>First Name *
+                                    </label>
+                                    {{ form.first_name }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.last_name.id_for_label }}" class="form-label">
+                                        <i class="bi bi-person me-2"></i>Last Name *
+                                    </label>
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">
+                                <i class="bi bi-at me-2"></i>Username *
+                            </label>
+                            {{ form.username }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                <i class="bi bi-envelope me-2"></i>Email Address *
+                            </label>
+                            {{ form.email }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">
+                                <i class="bi bi-telephone me-2"></i>Phone Number
+                            </label>
+                            <input type="tel" class="form-control" name="phone" placeholder="Optional">
+                        </div>
+
+                        <div class="mb-3" id="organizationField" style="display: none;">
+                            <label for="organization" class="form-label">
+                                <i class="bi bi-building me-2"></i>Organization/Institution
+                            </label>
+                            <input type="text" class="form-control" name="organization" placeholder="Your school, college, or organization">
+                        </div>
+
+                        <!-- Password Fields -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.password1.id_for_label }}" class="form-label">
+                                        <i class="bi bi-lock me-2"></i>Password *
+                                    </label>
+                                    {{ form.password1 }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="{{ form.password2.id_for_label }}" class="form-label">
+                                        <i class="bi bi-lock-fill me-2"></i>Confirm Password *
+                                    </label>
+                                    {{ form.password2 }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3" id="bioField" style="display: none;">
+                            <label for="bio" class="form-label">
+                                <i class="bi bi-card-text me-2"></i>Bio/About You
+                            </label>
+                            <textarea class="form-control" name="bio" rows="3" placeholder="Tell us about yourself and your teaching experience"></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-person-plus me-2"></i>Create Account
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <p class="text-muted">
+                                Already have an account? 
+                                <a href="{% url 'login' %}" class="text-decoration-none">
+                                    Sign in here
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.role-card {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid #e9ecef;
+}
+
+.role-card:hover {
+    border-color: #007bff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.1);
+}
+
+.role-card.selected {
+    border-color: #007bff;
+    background-color: #f8f9ff;
+}
+
+.role-card.selected .card-body {
+    background-color: transparent;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const roleCards = document.querySelectorAll('.role-card');
+    const organizationField = document.getElementById('organizationField');
+    const bioField = document.getElementById('bioField');
+    
+    roleCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Remove selected class from all cards
+            roleCards.forEach(c => c.classList.remove('selected'));
+            
+            // Add selected class to clicked card
+            this.classList.add('selected');
+            
+            // Update radio button
+            const radio = this.querySelector('input[type="radio"]');
+            radio.checked = true;
+            
+            // Show/hide additional fields based on role
+            const role = this.dataset.role;
+            if (role === 'instructor') {
+                organizationField.style.display = 'block';
+                bioField.style.display = 'block';
+            } else {
+                organizationField.style.display = 'none';
+                bioField.style.display = 'none';
+            }
+        });
+    });
+    
+    // Initialize with student selected
+    document.querySelector('.role-card[data-role="student"]').click();
+});
+</script>
+{% endblock %}

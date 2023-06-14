@@ -1,0 +1,131 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="display-5 fw-bold mb-2">All Quizzes</h1>
+                    <p class="text-muted">Browse all available quizzes and test your knowledge</p>
+                </div>
+                {% if user.userprofile.role == 'instructor' or user.is_staff %}
+                    <a href="/admin/" class="btn btn-success">
+                        <i class="bi bi-plus-circle me-2"></i>Create New Quiz
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if quizzes %}
+        <div class="row">
+            {% for quiz in quizzes %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card quiz-card h-100 shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="bi bi-journal-text text-primary me-3 fs-3"></i>
+                                <div class="flex-grow-1">
+                                    <h5 class="card-title mb-2">{{ quiz.title }}</h5>
+                                    <span class="badge bg-primary-subtle text-primary mb-2">
+                                        {{ quiz.questions.count }} Question{{ quiz.questions.count|pluralize }}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <p class="card-text text-muted flex-grow-1">
+                                {{ quiz.description|truncatewords:25|default:"No description available." }}
+                            </p>
+                            
+                            <div class="quiz-details mb-3">
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <small class="text-muted d-flex align-items-center">
+                                            <i class="bi bi-clock me-1"></i>
+                                            {{ quiz.duration_minutes }}m
+                                        </small>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted d-flex align-items-center">
+                                            <i class="bi bi-award me-1"></i>
+                                            {{ quiz.total_marks }} marks
+                                        </small>
+                                    </div>
+                                    <div class="col-12">
+                                        <small class="text-muted d-flex align-items-center">
+                                            <i class="bi bi-person me-1"></i>
+                                            {{ quiz.created_by.get_full_name|default:quiz.created_by.username }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-auto">
+                                <a href="{% url 'quiz_detail' quiz.id %}" class="btn btn-primary w-100">
+                                    <i class="bi bi-play-fill me-2"></i>View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination if needed -->
+        <div class="row mt-5">
+            <div class="col-12 text-center">
+                <p class="text-muted">Showing {{ quizzes.count }} quiz{{ quizzes.count|pluralize }}</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="py-5">
+                    <i class="bi bi-journal-x display-1 text-muted mb-4"></i>
+                    <h3 class="text-muted mb-3">No Quizzes Available</h3>
+                    <p class="text-muted mb-4">There are currently no active quizzes to display.</p>
+                    {% if user.userprofile.role == 'instructor' or user.is_staff %}
+                        <a href="/admin/" class="btn btn-primary btn-lg">
+                            <i class="bi bi-plus-circle me-2"></i>Create Your First Quiz
+                        </a>
+                    {% else %}
+                        <a href="{% url 'home' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-house me-2"></i>Back to Home
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.quiz-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    border-radius: 15px;
+}
+
+.quiz-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+
+.badge {
+    font-size: 0.75rem;
+}
+
+.btn {
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.quiz-details {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #0d6efd;
+}
+</style>
+{% endblock %}

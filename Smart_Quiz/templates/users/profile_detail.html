@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="text-center mb-4">
+            <div class="avatar mb-3">
+                <span class="badge bg-primary rounded-circle p-3 fs-2">
+                    {{ profile.user.first_name|first|upper }}{{ profile.user.last_name|first|upper }}
+                </span>
+            </div>
+            <h4>{{ profile.user.first_name }} {{ profile.user.last_name }}</h4>
+            <p class="text-muted">{{ profile.user.username }}</p>
+            <span class="badge bg-{% if profile.role == 'admin' %}danger{% elif profile.role == 'instructor' %}warning{% else %}primary{% endif %} fs-6">
+                {{ profile.get_role_display }}
+            </span>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h5 class="mb-3">Profile Information</h5>
+        <table class="table table-borderless">
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{ profile.user.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Phone:</strong></td>
+                <td>{{ profile.phone|default:"Not provided" }}</td>
+            </tr>
+            <tr>
+                <td><strong>Organization:</strong></td>
+                <td>{{ profile.organization|default:"Not provided" }}</td>
+            </tr>
+            <tr>
+                <td><strong>Status:</strong></td>
+                <td>
+                    <span class="badge bg-{% if profile.status == 'active' %}success{% elif profile.status == 'pending' %}warning{% else %}danger{% endif %}">
+                        {{ profile.get_status_display }}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Date Joined:</strong></td>
+                <td>{{ profile.user.date_joined|date:"F d, Y g:i A" }}</td>
+            </tr>
+            <tr>
+                <td><strong>Last Login:</strong></td>
+                <td>
+                    {% if profile.user.last_login %}
+                        {{ profile.user.last_login|date:"F d, Y g:i A" }}
+                    {% else %}
+                        <span class="text-muted">Never logged in</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% if profile.approved_by %}
+            <tr>
+                <td><strong>Approved By:</strong></td>
+                <td>{{ profile.approved_by.get_full_name }} on {{ profile.approved_at|date:"F d, Y" }}</td>
+            </tr>
+            {% endif %}
+        </table>
+        
+        {% if profile.bio %}
+        <h5 class="mb-3 mt-4">Bio</h5>
+        <div class="card">
+            <div class="card-body">
+                <p class="mb-0">{{ profile.bio|linebreaks }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if profile.status == 'pending' %}
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-success" onclick="approveUser({{ profile.id }})">
+        <i class="bi bi-check-circle me-1"></i>Approve
+    </button>
+    <button type="button" class="btn btn-danger" onclick="rejectUser({{ profile.id }})">
+        <i class="bi bi-x-circle me-1"></i>Reject
+    </button>
+</div>
+{% endif %}

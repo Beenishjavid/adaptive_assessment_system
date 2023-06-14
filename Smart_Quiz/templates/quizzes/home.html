@@ -1,0 +1,157 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Smart Quiz System</h1>
+                <p class="lead mb-4">
+                    Test your knowledge with our interactive online quizzes. 
+                    Track your progress and improve your skills.
+                </p>
+                {% if not user.is_authenticated %}
+                    <div class="d-flex gap-3">
+                        <a href="{% url 'register' %}" class="btn btn-light btn-lg">
+                            <i class="bi bi-person-plus me-2"></i>Get Started
+                        </a>
+                        <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="bi bi-lightbulb display-1"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Available Quizzes -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="fw-bold mb-3">Available Quizzes</h2>
+                {% if user.is_authenticated %}
+                    <p class="text-muted">Choose from our collection of interactive quizzes</p>
+                {% else %}
+                    <p class="text-muted">Please login to access our interactive quizzes</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if user.is_authenticated %}
+            {% if quizzes %}
+                <div class="row">
+                    {% for quiz in quizzes %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card quiz-card h-100">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">
+                                        <i class="bi bi-journal-text text-primary me-2"></i>
+                                        {{ quiz.title }}
+                                    </h5>
+                                    <p class="card-text text-muted flex-grow-1">
+                                        {{ quiz.description|truncatewords:20|default:"No description available." }}
+                                    </p>
+                                    
+                                    <div class="quiz-details mb-3">
+                                        <small class="text-muted d-block">
+                                            <i class="bi bi-clock me-1"></i>Duration: {{ quiz.duration_minutes }} minutes
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="bi bi-award me-1"></i>Total Marks: {{ quiz.total_marks }}
+                                        </small>
+                                        <small class="text-muted d-block">
+                                            <i class="bi bi-person me-1"></i>By: {{ quiz.created_by.get_full_name|default:quiz.created_by.username }}
+                                        </small>
+                                    </div>
+                                    
+                                    <div class="mt-auto">
+                                        <a href="{% url 'quiz_detail' quiz.id %}" class="btn btn-primary w-100">
+                                            <i class="bi bi-play-fill me-2"></i>View Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="py-5">
+                            <i class="bi bi-journal-x display-1 text-muted mb-3"></i>
+                            <h4 class="text-muted">No quizzes available yet</h4>
+                            <p class="text-muted">Check back later for new quizzes!</p>
+                            {% if user.userprofile.role == 'instructor' or user.is_staff %}
+                                <a href="/admin/" class="btn btn-primary mt-3">
+                                    <i class="bi bi-plus-circle me-2"></i>Create Your First Quiz
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <!-- Login Prompt for Non-Authenticated Users -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="py-5">
+                        <i class="bi bi-lock display-1 text-muted mb-3"></i>
+                        <h4 class="text-muted">Login Required</h4>
+                        <p class="text-muted mb-4">Please create an account or login to access our quiz collection</p>
+                        <div class="d-flex gap-3 justify-content-center">
+                            <a href="{% url 'register' %}" class="btn btn-primary btn-lg">
+                                <i class="bi bi-person-plus me-2"></i>Create Account
+                            </a>
+                            <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Features Section -->
+{% if not user.is_authenticated %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="fw-bold mb-3">Why Choose Smart Quiz?</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-speedometer2 display-4 text-primary mb-3"></i>
+                    <h5>Fast & Reliable</h5>
+                    <p class="text-muted">Quick quiz creation and instant results with reliable performance.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-shield-check display-4 text-success mb-3"></i>
+                    <h5>Secure Testing</h5>
+                    <p class="text-muted">Advanced security features to ensure fair and honest assessments.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-graph-up display-4 text-info mb-3"></i>
+                    <h5>Detailed Analytics</h5>
+                    <p class="text-muted">Comprehensive reports and analytics to track your progress.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center min-vh-75">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">Smart Quiz System</h1>
+                <p class="lead mb-4">
+                    Test your knowledge with our interactive online quizzes. 
+                    Track your progress and improve your skills with advanced features.
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'register' %}" class="btn btn-light btn-lg">
+                        <i class="bi bi-person-plus me-2"></i>Get Started
+                    </a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="bi bi-lightbulb display-1"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="fw-bold mb-3">Why Choose Smart Quiz System?</h2>
+                <p class="text-muted">Advanced features for modern online assessment</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-collection display-4 text-primary mb-3"></i>
+                    <h5>Question Banks</h5>
+                    <p class="text-muted">Reusable question repositories with categorization for efficient quiz creation.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-shuffle display-4 text-success mb-3"></i>
+                    <h5>Randomization</h5>
+                    <p class="text-muted">Random question and answer order to ensure fair and honest assessments.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-calendar-check display-4 text-info mb-3"></i>
+                    <h5>Scheduled Quizzes</h5>
+                    <p class="text-muted">Set start and end dates with late submission handling and penalties.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-pencil-square display-4 text-warning mb-3"></i>
+                    <h5>Multiple Question Types</h5>
+                    <p class="text-muted">MCQ, True/False, Fill-in-blank, Short Answer, and Essay questions.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-person-check display-4 text-danger mb-3"></i>
+                    <h5>Manual Grading</h5>
+                    <p class="text-muted">Instructor review and grading for essay and subjective questions.</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="text-center">
+                    <i class="bi bi-graph-up display-4 text-secondary mb-3"></i>
+                    <h5>Detailed Analytics</h5>
+                    <p class="text-muted">Comprehensive reports and analytics to track student progress.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.hero-section {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+}
+.min-vh-75 {
+    min-height: 75vh;
+}
+</style>
+{% endblock %}
