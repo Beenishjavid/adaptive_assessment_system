@@ -24,7 +24,7 @@ def insert_real_data():
     instructor_user, created = User.objects.get_or_create(
         username='instructor',
         defaults={
-            'email': 'instructor@nstu.com',
+            'email': 'instructor@example.com',
             'first_name': 'John',
             'last_name': 'Teacher'
         }
@@ -36,7 +36,7 @@ def insert_real_data():
     student_user, created = User.objects.get_or_create(
         username='student',
         defaults={
-            'email': 'student@nstu.com',
+            'email': 'student@example.com',
             'first_name': 'Jane',
             'last_name': 'Student'
         }

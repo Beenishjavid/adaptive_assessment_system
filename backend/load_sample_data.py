@@ -35,7 +35,7 @@ def create_sample_data():
     admin_user, created = User.objects.get_or_create(
         username='admin',
         defaults={
-            'email': 'admin@nstu.com',
+            'email': 'admin@example.com',
             'first_name': 'Admin',
             'last_name': 'User',
             'is_staff': True,
@@ -49,7 +49,7 @@ def create_sample_data():
     instructor_user, created = User.objects.get_or_create(
         username='instructor',
         defaults={
-            'email': 'instructor@nstu.com',
+            'email': 'instructor@example.com',
             'first_name': 'John',
             'last_name': 'Teacher'
         }
@@ -61,7 +61,7 @@ def create_sample_data():
     student_user, created = User.objects.get_or_create(
         username='student',
         defaults={
-            'email': 'student@nstu.com',
+            'email': 'student@example.com',
             'first_name': 'Jane',
             'last_name': 'Student'
         }

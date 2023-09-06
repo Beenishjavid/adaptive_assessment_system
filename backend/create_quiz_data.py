@@ -22,7 +22,7 @@ def create_sample_data_orm():
     
     # Create organization if it doesn't exist
     org, created = Organization.objects.get_or_create(
-        name="NSTU University",
+        name="Demo University",
         defaults={
             'description': 'Noakhali Science and Technology University',
             'subscription_type': 'premium',
@@ -37,7 +37,7 @@ def create_sample_data_orm():
     instructor_user, created = User.objects.get_or_create(
         username='instructor',
         defaults={
-            'email': 'instructor@nstu.com',
+            'email': 'instructor@example.com',
             'first_name': 'John',
             'last_name': 'Teacher'
         }
@@ -49,7 +49,7 @@ def create_sample_data_orm():
     student_user, created = User.objects.get_or_create(
         username='student',
         defaults={
-            'email': 'student@nstu.com',
+            'email': 'student@example.com',
             'first_name': 'Jane',
             'last_name': 'Student'
         }

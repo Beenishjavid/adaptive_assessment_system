@@ -838,7 +838,7 @@ INSERT INTO django_migrations (app, name, applied) VALUES
 /*
 -- Sample Admin User (password: admin123)
 INSERT INTO auth_user (username, password, is_superuser, first_name, last_name, email, is_staff, is_active, date_joined)
-VALUES ('admin', 'pbkdf2_sha256$600000$B4q8hX4DjW8M4gF9XnC2cL$VVKJVZzFQ7/bKM5R5L6XGl+EcR8Y5Qg4t4Z0F8Z8Z8Z=', 1, 'Admin', 'User', 'admin@nstu.edu.bd', 1, 1, GETDATE());
+VALUES ('admin', 'pbkdf2_sha256$600000$B4q8hX4DjW8M4gF9XnC2cL$VVKJVZzFQ7/bKM5R5L6XGl+EcR8Y5Qg4t4Z0F8Z8Z8Z=', 1, 'Admin', 'User', 'admin@example.com', 1, 1, GETDATE());
 
 -- Sample Instructor User (password: instructor123)
 INSERT INTO auth_user (username, password, is_superuser, first_name, last_name, email, is_staff, is_active, date_joined)
@@ -853,11 +853,11 @@ VALUES
 
 -- Sample User Profiles (Enhanced)
 INSERT INTO users_userprofile (user_id, role, bio, status, organization) VALUES
-((SELECT id FROM auth_user WHERE username='admin'), 'admin', 'System administrator', 'active', 'NSTU'),
-((SELECT id FROM auth_user WHERE username='instructor1'), 'instructor', 'Computer Science Professor', 'active', 'NSTU - CSE Department'),
-((SELECT id FROM auth_user WHERE username='student1'), 'student', 'Final year CSE student', 'active', 'NSTU'),
-((SELECT id FROM auth_user WHERE username='student2'), 'student', 'Second year CSE student', 'active', 'NSTU'),
-((SELECT id FROM auth_user WHERE username='student3'), 'student', 'Third year CSE student', 'active', 'NSTU');
+((SELECT id FROM auth_user WHERE username='admin'), 'admin', 'System administrator', 'active', 'Demo University'),
+((SELECT id FROM auth_user WHERE username='instructor1'), 'instructor', 'Computer Science Professor', 'active', 'Demo University - CSE Department'),
+((SELECT id FROM auth_user WHERE username='student1'), 'student', 'Final year CSE student', 'active', 'Demo University'),
+((SELECT id FROM auth_user WHERE username='student2'), 'student', 'Second year CSE student', 'active', 'Demo University'),
+((SELECT id FROM auth_user WHERE username='student3'), 'student', 'Third year CSE student', 'active', 'Demo University');
 
 -- Sample Topics
 INSERT INTO quizzes_topic (name, description) VALUES

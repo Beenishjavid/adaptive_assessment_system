@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': config('DATABASE_NAME', default='SmartQuizDB'),
         'USER': config('DATABASE_USER', default=''),
         'PASSWORD': config('DATABASE_PASSWORD', default=''),
-        'HOST': config('DATABASE_HOST', default='DESKTOP-3NT5988\\SQLEXPRESS'),
+        'HOST': config('DATABASE_HOST', default='localhost'),
         'PORT': config('DATABASE_PORT', default='1433'),
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
